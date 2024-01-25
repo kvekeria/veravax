@@ -1,7 +1,7 @@
 from flask import Blueprint, request, make_response
 import json
 from marshmallow import ValidationError
-from app import db, guard, flask_praetorian
+from app import db
 from app.models import ApiData
 from app.schemas import ReturnVaccine, CreateVaccine
 
@@ -9,7 +9,6 @@ vaccine = Blueprint('vaccine', __name__, url_prefix='/vdata')
 
 """Get API Data entry by ID"""
 
-@flask_praetorian.auth_required
 @vaccine.route('/<int:id>', methods=['GET'])
 def get_ventry(id):
     return_vaccine = ReturnVaccine()

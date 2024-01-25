@@ -70,19 +70,7 @@ class CreateScrape(ma.SQLAlchemyAutoSchema):
     date = fields.Date(required=True)
     manufacturer = Manufacturer(required=True)
 
-class CreateUser(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = User
-        exclude = ("id",)
-    email = fields.Email(required=True)
-    roles = Optional[str] = ""
 
-class LoginUser(ma.SQLAlchemySchema):
-    class Meta:
-        model = User
-    
-    email = fields.Email(required=True)
-    password = ma.auto_field()
 
         
 

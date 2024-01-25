@@ -13,8 +13,6 @@ migrate = Migrate(app, db)
 
 ma = Marshmallow(app)
 
-from app.models import User
-
 from app.routes import vaccine, scrape
 
 app.register_blueprint(vaccine.vaccine)
