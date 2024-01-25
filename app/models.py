@@ -60,7 +60,7 @@ class User(db.Model):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     # is_active = Column(Boolean, default=True, server_default=True)
-    public_id = Column(Integer, nullable=False)
+    # public_id = Column(Integer, nullable=False)
     created_at = Column(TIMESTAMP, server_default=('now()'), nullable=False)
 
 

@@ -4,13 +4,15 @@ from marshmallow import ValidationError
 from app import db
 from app.models import ApiData
 from app.schemas import ReturnVaccine, CreateVaccine
+from app import jwt_required
 
 vaccine = Blueprint('vaccine', __name__, url_prefix='/vdata')
 
 """Get API Data entry by ID"""
 
 @vaccine.route('/<int:id>', methods=['GET'])
-def get_ventry(id):
+@jwt_required
+def get_ventry(id, data):
     return_vaccine = ReturnVaccine()
     entry = ApiData.query.filter_by(id=id).first()
     if not entry:
@@ -19,9 +21,9 @@ def get_ventry(id):
 
 """Get API Data entries based on filters"""
 
-
 @vaccine.route('/', methods=['GET'])
-def get_vdata():
+@jwt_required
+def get_vdata(data):
     return_vaccine = ReturnVaccine()
     converted_data = []
     data = ApiData.query.all()
@@ -34,7 +36,8 @@ def get_vdata():
 """Create API Data entry"""
 
 @vaccine.route('/', methods=['POST'])
-def create_ventry():
+@jwt_required
+def create_ventry(data):
     try:
         return_vaccine = ReturnVaccine()
 
@@ -58,7 +61,8 @@ def create_ventry():
 """Update API Data Entry"""    
 
 @vaccine.route('/<int:id>', methods=['PUT', 'PATCH'])
-def update_ventry(id):
+@jwt_required
+def update_ventry(id, data):
     try:
       return_vaccine = ReturnVaccine()
 
@@ -84,7 +88,8 @@ def update_ventry(id):
 """Delete API Data Entry"""
 
 @vaccine.route('/<int:id>', methods=['DELETE'])
-def delete_ventry(id):
+@jwt_required
+def delete_ventry(id, data):
     return_vaccine = ReturnVaccine()
 
     entry = ApiData.query.get(id)

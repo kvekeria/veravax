@@ -4,6 +4,7 @@ import json
 from marshmallow import ValidationError
 from app import db
 from app.models import ScrapeData
+from app import jwt_required
 from app.schemas import CreateScrape, ReturnScrape
 
 create_scrape = CreateScrape()
@@ -11,19 +12,21 @@ return_scrape = ReturnScrape()
 
 scrape = Blueprint('scrape', __name__, url_prefix='/sdata')
 
-"""Get API Data entry by ID"""
+"""Get Scrape Data entry by ID"""
 
 @scrape.route('/<int:id>', methods=['GET'])
-def get_sentry(id):
+@jwt_required
+def get_sentry(id, data):
     entry = ScrapeData.query.filter_by(id=id).first()
     if not entry:
         return make_response(f'ERROR: The requested entry was not found!', 404)
     return {'entry':return_scrape.dump(entry)}
 
-"""Get API Data entries based on filters"""
+"""Get Scrape Data entries based on filters"""
 
 @scrape.route('/', methods=['GET'])
-def get_sdata():
+@jwt_required
+def get_sdata(data):
     converted_data = []
     data = ScrapeData.query.all()
     if not data:
@@ -32,10 +35,11 @@ def get_sdata():
         converted_data.append(return_scrape.dump(entry))
     return {'entries': converted_data}
 
-"""Create API Data entry"""
+"""Create Scrape Data entry"""
 
 @scrape.route('/', methods=['POST'])
-def create_sentry():
+@jwt_required
+def create_sentry(data):
     try:
 
         """Serialize the data"""
@@ -55,10 +59,11 @@ def create_sentry():
     except (ValidationError) as err:
         return make_response(str(err), 406)
     
-"""Update API Data Entry"""    
+"""Update Scrape Data Entry"""    
 
 @scrape.route('/<int:id>', methods=['PUT', 'PATCH'])
-def update_sentry(id):
+@jwt_required
+def update_sentry(id, data):
     try:
       
       """Serialize the data"""
@@ -80,10 +85,11 @@ def update_sentry(id):
     except ValidationError as err:
         return make_response(str(err), 406)
 
-"""Delete API Data Entry"""
+"""Delete Scrape Data Entry"""
 
 @scrape.route('/<int:id>', methods=['DELETE'])
-def delete_sentry(id):
+@jwt_required
+def delete_sentry(id, data):
     entry = ScrapeData.query.get(id)
     if not entry:
         return make_response('ERROR: The requested entry was not found!', 404)

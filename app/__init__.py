@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
-import os
 
 app = Flask(__name__)
 
@@ -14,8 +13,11 @@ migrate = Migrate(app, db)
 
 ma = Marshmallow(app)
 
-from app.routes import vaccine, scrape
+from app.oauth import jwt_required
 
+from app.routes import vaccine, scrape, login, user
+app.register_blueprint(user.user)
+app.register_blueprint(login.login)
 app.register_blueprint(vaccine.vaccine)
 app.register_blueprint(scrape.scrape)
 

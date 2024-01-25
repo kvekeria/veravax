@@ -2,7 +2,7 @@ from typing import Optional
 from app import ma
 from app.models import ApiData, ScrapeData, User
 from marshmallow import ValidationError, validates_schema, fields
-from marshmallow.fields import Date
+from marshmallow.fields import Date, Email
 
 class USState(fields.Field):
     def _serialize(self, value, attr, obj, **kwargs):
@@ -70,8 +70,20 @@ class CreateScrape(ma.SQLAlchemyAutoSchema):
     date = fields.Date(required=True)
     manufacturer = Manufacturer(required=True)
 
+class LoginUser(ma.SQLAlchemySchema):
+    class Meta: 
+        model = User
+    email = fields.Email(required=True)
+    password = ma.auto_field()
 
+class CreateUser(LoginUser):
+    pass
 
+class ReturnUser(ma.SQLAlchemySchema):
+    class Meta:
+        model = User
+    email = ma.auto_field()
+    created_at = ma.auto_field()
         
 
             
