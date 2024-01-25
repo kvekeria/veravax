@@ -1,0 +1,88 @@
+/* index.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.5s ease;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .navbar {
+    background-color: #e21011;
+    padding: 15px 0;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease, box-shadow 0.3s ease;
+  }
+  
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 20px;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .navbar a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    bottom: -2px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .header {
+    font-size: 3em; /* Increased font size */
+    color: black;
+    margin-top: 20px;
+    transition: color 0.3s ease, transform 0.5s ease;
+  }
+  
+  
+  .paragraph {
+    font-size: 1.3em;
+    line-height: 2;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .paragraph.active {
+    opacity: 1;
+    transform: translateY(0);
+    font-style: italic;
+    font-weight: 100; /* Make text italic */
+    color: #e21011; /* Set a custom text color */
+    border-left: 2px solid #e21011; /* Add a left border */
+    padding-left: 10px; /* Add padding to the left of the text */
+    background-color: #f8f8f8; /* Set a background color */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    display: flex;
+  }
+
+  .soon {
+    font-weight: 300;
+    font-style: italic;
+  }
+  
