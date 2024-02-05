@@ -1,7 +1,7 @@
 from typing import Optional
 from app import ma
 from app.models import ApiData, ScrapeData, User
-from marshmallow import ValidationError, validates_schema, fields
+from marshmallow import ValidationError, validates_schema, fields, Schema
 from marshmallow.fields import Date, Email
 
 class USState(fields.Field):
@@ -36,6 +36,19 @@ class Manufacturer(fields. Field):
             raise ValidationError('Manufacturer must be an approved manufacturer (Pfizer, Moderna or Janssen)!')
         return str(value).upper()
 
+class Groups(fields. Field):
+    def _serialize(self, value, attr, obj, **kwargs):
+        if value is None:
+            return ""
+        return str(value)
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        groups = ['day', 'Day', 'Week', 'week', 'Month', 'month', 'Year', 'year']
+
+        if str(value) not in groups:
+            raise ValidationError('Aggregation must be by day, week, month or year!')
+        return str(value).lower()
+
         
 class ReturnVaccine(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -69,6 +82,9 @@ class CreateScrape(ma.SQLAlchemyAutoSchema):
         exclude = ("id",)
     date = fields.Date(required=True)
     manufacturer = Manufacturer(required=True)
+    location = USState(required=True)
+    first_dose = fields.Integer(required=True)
+    second_dose = fields.Integer(required=False)
 
 class LoginUser(ma.SQLAlchemySchema):
     class Meta: 
@@ -84,6 +100,37 @@ class ReturnUser(ma.SQLAlchemySchema):
         model = User
     email = ma.auto_field()
     created_at = ma.auto_field()
+
+class ReturnWeekAvg(ma.SQLAlchemySchema):
+
+    date = fields.Date()
+    avgdistjan = fields.Integer()
+    avgdistmod = fields.Integer()
+    avgdistpfi = fields.Integer()
+    avgcomjan5 = fields.Integer()
+    avgcommod5 = fields.Integer()
+    avgcompfi5 = fields.Integer()
+    avgcomjan12 = fields.Integer()
+    avgcommod12 = fields.Integer()
+    avgcompfi12 = fields.Integer()
+    avgcomjan18 = fields.Integer()
+    avgcommod18 = fields.Integer()
+    avgcompfi18 = fields.Integer()
+    avgcomjan65 = fields.Integer()
+    avgcommod65 = fields.Integer()
+    avgcompfi65 = fields.Integer()
+    avgsecjan = fields.Integer()
+    avgsecmod = fields.Integer()
+    avgsecpfi = fields.Integer()
+
+class QueryArgsSchema(Schema):
+    location = fields.String()
+    manufacturer = Manufacturer()
+    date = fields.Date()
+
+class AggQueryArgsSchema(Schema):
+    aggregation = Groups()
+
         
 
             

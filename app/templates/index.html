@@ -1,9 +1,42 @@
-{% extends 'base.html' %}
+<!-- index.html -->
 
-{% block content %}
+{% extends 'base.html' %} {% block content %}
+<link rel="stylesheet" href="/static/styles/index.css" />
+<div class="home-container">
   <header>
-    <h1 class="header">veravax</h1>
-    <h2>A RESTful API service!</h2>
+    <p class="paragraph active">
+      Coming Soon: Get a tailored vaccine reccomendation!
+    </p>
   </header>
-  <p class="paragraph active">This API will soon be able to provide a tailored vaccine reccomendation for users</p>
+
+  <p>Welcome to my RESTful API service!</p>
+  <p>
+    The purpose of this API is to allow users to understand how demographics
+    play a role in which vaccine type (Moderna, Pfizer and/or Janssen) an
+    individual recieves.
+  </p>
+  <p>This API allows users to:</p>
+  <ul>
+    <li>
+      access COVID-19 vaccine data from the Centers for Disease Control (CDC)
+    </li>
+    <li>report statistics on vaccine distribution.</li>
+    <li>
+      retrieve a personalized reccomendation based on demographics. (in
+      development)
+    </li>
+  </ul>
+  <p>
+    Also if you are viewing the API's web interface (this page), feel free to
+    click on the "View Data" tab to check out some cool interactive visuals to
+    get an overview of the data!
+  </p>
+  <p>
+    If you plan on accessing the API's endpoints through your own frontend
+    application, check out the interactive docs from Swagger UI to get an
+    understanding of the data this API can provide.
+  </p>
+  <p>All initial data is provided by the Centers for Disease Control, a division of the United States Department of Health and Human Resources (HHS). To learn more about the HHS and their mission please visit their <a href="https://hhs.gov">website</a>.</p>
+</div>
+
 {% endblock %}

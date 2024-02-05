@@ -9,12 +9,12 @@ def jwt_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         token = request.headers.get("Authorization")
-
+        print(token)
         if not token:
             return make_response('ERROR: Token required!', 401)
         
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
             return make_response('ERROR: Token has expired!', 401)
         except jwt.InvalidTokenError:

@@ -1,14 +1,17 @@
 from app import db
-from sqlalchemy import Column, Integer, Double, TIMESTAMP, text, String, Boolean, CheckConstraint, UniqueConstraint
+from sqlalchemy import Column, Integer, Double, TIMESTAMP, text, String, ForeignKey, Boolean, CheckConstraint, UniqueConstraint, Date
 from typing import Optional
+from datetime import datetime
+from sqlalchemy.orm import relationship
 
 class ApiData(db.Model):
 
     __tablename__ = 'api_data'
 
     id = Column(Integer, primary_key=True, nullable=False)
-    date = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
     location = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=True)
     created_at = Column(TIMESTAMP, server_default=('now()'), nullable=False)
     series_complete_janssen_5plus = Column(Integer)
     series_complete_moderna_5plus = Column(Integer)
@@ -31,6 +34,8 @@ class ApiData(db.Model):
     distributed_janssen = Column(Integer)
     distributed_moderna = Column(Integer)
     distributed_pfizer = Column(Integer)
+    user = relationship('User', back_populates='api_data')
+
 
 cols = ApiData.__table__.columns.keys()[3:]
 check_constraint = CheckConstraint(' OR '.join(f'{col} IS NOT NULL' for col in cols), name='at_least_one')
@@ -44,10 +49,13 @@ class ScrapeData(db.Model):
 
     id = Column(Integer, primary_key=True, nullable=False)
     location = Column(String, nullable=False)
-    date = Column(String, nullable=False)
-    number = Column(Integer, nullable=False)
+    date = Column(Date, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=True)
+    first_dose = Column(Integer, nullable=False)
+    second_dose = Column(Integer)
     manufacturer = Column(String, nullable=False)
     created_at = Column(TIMESTAMP, server_default=('now()'), nullable=False)
+    user = relationship('User', back_populates='scrape_data')
 
 scrape_constraint = UniqueConstraint('location', 'date', 'manufacturer', name='date_location_sc')
 ScrapeData.__table__.append_constraint(scrape_constraint)
@@ -62,6 +70,9 @@ class User(db.Model):
     # is_active = Column(Boolean, default=True, server_default=True)
     # public_id = Column(Integer, nullable=False)
     created_at = Column(TIMESTAMP, server_default=('now()'), nullable=False)
+    api_data = relationship('ApiData', back_populates='user', cascade='all, delete-orphan')
+    scrape_data = relationship('ScrapeData', back_populates='user', cascade='all, delete-orphan')
+
 
 
         

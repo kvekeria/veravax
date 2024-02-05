@@ -1,0 +1,112 @@
+.view-data-content {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.chart-container {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.api-dist-wk {
+  width: 60vh;
+  height: 45vh;
+  border: 1px solid #ddd;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 4px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.07);
+  padding-bottom: 80px;
+  border-radius: 7px;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.api-dist-wk:hover {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.view-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  margin: 20px;
+}
+
+.api-dist-wk > h3 {
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+h2 {
+  font-weight: 300;
+  color: #e21011;
+  font-size: 2em;
+  display: inline;
+  margin-right: 0.05rem;
+}
+
+
+body.blurred::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999; 
+}
+
+#state {
+  display: inline;
+  background: transparent;
+  position: relative;
+  border-bottom: none;
+  font-family: "Gothic A1", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border-top: none;
+  border-left: none;
+  color: #e21011;
+  border-right: none;
+}
+
+.alloc-title {
+  position: relative;
+  display: inline;
+  margin-right: 0.002rem;
+}
+
+.head-container {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.title-container > select {
+  margin-top: 4em;
+  position: relative;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: #e21011;
+  border-bottom: none;
+  background: transparent;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 300;
+  font-size: 2em;
+}
+
+.scrape-dist-state {
+  position: relative;
+  left: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
